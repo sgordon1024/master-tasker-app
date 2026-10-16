@@ -4,8 +4,6 @@ Master Tasker is a task board that runs on your own Mac, with your tasks kept in
 
 It's for one person who wants their work and personal to-dos in one calm place, and wants an AI assistant to help with them, without a Master Tasker account or a cloud service.
 
-> **Not released yet.** It's being prepared for its first public release.
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.png">
   <img src="docs/screenshot.png" alt="The Today view: one task in progress, one that needs you, and the rest of the day's plan">
@@ -202,7 +200,7 @@ The Master Tasker folder holds only the app, so you can move or replace it witho
 - [docs/MCP.md](docs/MCP.md): connecting Claude, Codex, Copilot, Cursor, Gemini CLI, Windsurf and other apps by hand
 - [docs/OPERATIONS.md](docs/OPERATIONS.md): settings, logs, backups, restore, troubleshooting
 - [docs/REVIEW.md](docs/REVIEW.md): the optional daily review, for developers
-- [docs/REBUILD.md](docs/REBUILD.md): the roadmap to the first public release
+- [docs/REBUILD.md](docs/REBUILD.md): the roadmap
 - [SECURITY.md](SECURITY.md): what it protects against, and how to report a security problem
 - [CONTRIBUTING.md](CONTRIBUTING.md): working on Master Tasker itself
 

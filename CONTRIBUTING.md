@@ -2,7 +2,7 @@
 
 Thanks for helping. This is for changing Master Tasker itself. To install and use it, see the [README](README.md).
 
-What's left before the first public release is in [docs/REBUILD.md](docs/REBUILD.md). Pick any open step.
+The roadmap is in [docs/REBUILD.md](docs/REBUILD.md).
 
 ## Run it
 

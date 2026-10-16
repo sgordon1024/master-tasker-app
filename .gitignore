@@ -1,0 +1,22 @@
+node_modules/
+dist/
+.data/
+*.db
+*.db-wal
+*.db-shm
+.env
+.env.*
+!.env.example
+test-results/
+playwright-report/
+.DS_Store
+*.log
+.claude/
+*.sqlite
+*.sqlite3
+.impeccable/
+# Written by scripts/install-skill.sh and Set up Claude Code in Settings > AI assistants: this Mac's paths
+claude/skills/master-tasker/.local.env
+# Node.js that scripts/service.sh get-node downloads for this copy only, and its download in progress
+/.node/
+/.node-download/

@@ -1,0 +1,126 @@
+/* The tour: full window and quiet, like Focus. Three pictures of how the app works, a few words each, one button.
+   Reads tokens only. DESIGN.md has the rules for the pictures. */
+
+.tour {
+  position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0;
+  background: var(--surface-page); color: var(--text-primary); overflow: hidden;
+}
+.tour[open] { display: flex; flex-direction: column; animation: ds-overlay-in var(--duration-base) var(--ease-arrive); }
+.tour::backdrop { background: var(--surface-page); }
+.tour kbd { font: inherit; font-size: var(--size-label); line-height: 1; font-weight: var(--weight-medium); padding: 3px 5px; border-radius: var(--radius-xs); border: 1px solid var(--border-default); color: var(--text-secondary); display: inline-flex; align-items: center; }
+
+.tour-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-5) var(--space-8); flex-shrink: 0; }
+.tour-name { display: inline-flex; align-items: center; gap: var(--space-3); min-width: 0; font-size: var(--size-meta); line-height: var(--leading-meta); color: var(--text-secondary); }
+.tour-name .brand-mark { width: 20px; height: 20px; }
+
+.tour-main { flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; align-items: center; padding: var(--space-2) var(--space-8) var(--space-8); }
+/* Centered when it fits, and scrolls from the top when it doesn't. */
+.tour-main > :first-child { margin-top: auto; }
+.tour-main > :last-child { margin-bottom: auto; }
+.tour-stage { width: min(640px, 100%); display: flex; flex-direction: column; align-items: center; text-align: center; animation: focus-step var(--duration-base) var(--ease-arrive); }
+.tour-art { width: 100%; display: flex; justify-content: center; margin-bottom: var(--space-8); }
+.tour-count { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3); font-size: var(--size-meta); line-height: var(--leading-meta); color: var(--text-secondary); }
+.tour-dots { display: flex; gap: var(--space-2); }
+.tour-dots i { width: 8px; height: 8px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--border-input); transition: background var(--duration-fast), box-shadow var(--duration-fast), transform var(--duration-fast); }
+.tour-dots i.is-past { background: var(--text-secondary); box-shadow: none; }
+.tour-dots i.is-now { background: var(--text-primary); box-shadow: none; transform: scale(1.25); }
+.tour-title { margin: 0; font-size: var(--size-view); line-height: var(--leading-view); font-weight: var(--weight-strong); letter-spacing: var(--tracking-view); text-wrap: balance; }
+.tour-say { margin: var(--space-3) 0 0; max-width: 520px; font-size: var(--size-capture); line-height: var(--leading-capture); color: var(--text-secondary); text-wrap: pretty; }
+.tour-note { margin: var(--space-3) 0 0; max-width: 480px; font-size: var(--size-meta); line-height: var(--leading-meta); color: var(--text-secondary); text-wrap: pretty; }
+
+.tour-actions { display: flex; align-items: center; justify-content: center; gap: var(--space-3); margin-top: var(--space-8); flex-shrink: 0; }
+.tour-actions .focus-go { min-width: 160px; justify-content: center; }
+.tour-back.is-hidden { visibility: hidden; }
+
+@media (max-width: 600px) {
+  .tour-top { padding: var(--space-3) var(--space-2) var(--space-3) var(--space-4); padding-top: max(var(--space-3), env(safe-area-inset-top)); }
+  .tour-main { padding: 0 var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom)); }
+  .tour-art { margin-bottom: var(--space-6); }
+  .tour-actions { width: 100%; justify-content: space-between; margin-top: var(--space-6); }
+  .tour-actions .focus-go { flex: 1; min-width: 0; padding: var(--space-3) var(--space-5); }
+}
+@media (pointer: coarse) { .tour kbd { display: none; } .tour-actions .focus-skip, .tour .focus-exit { min-height: var(--control-lg); } }
+
+/* ─── The pictures ───
+   Drawn at 1:1 from the app's own parts. Surfaces, lines and text use the same tokens as the real thing, so light,
+   dark and every color theme come for free. Red only for Needs you; area colors only as dots. */
+.ta { display: block; max-width: 100%; height: auto; overflow: visible; font-family: inherit; font-feature-settings: 'cv11'; }
+.ta text { font-family: inherit; }
+.ta-col { fill: var(--surface-pane); }
+.ta-box { fill: var(--surface-card); stroke: var(--border-card); }
+.ta-page { fill: var(--surface-page); stroke: var(--border-card); }
+.ta-raised { filter: var(--shadow-drop); }
+.ta-slot { fill: none; stroke: var(--border-default); stroke-dasharray: 4 3; }
+.ta-stub { fill: var(--chip-bg); }
+.ta-bracket, .ta-rule { fill: none; stroke: var(--border-subtle); }
+.ta-bracket { stroke: var(--border-default); }
+
+.ta-head { font-size: var(--size-body); font-weight: var(--weight-strong); fill: var(--text-primary); }
+.ta-label { font-size: var(--size-label); font-weight: var(--weight-medium); fill: var(--text-secondary); }
+.ta-title { font-size: var(--size-meta); fill: var(--text-primary); }
+.ta-title.is-strong { font-weight: var(--weight-medium); }
+.ta-title.is-done { fill: var(--text-secondary); text-decoration: line-through; }
+.ta-hint { font-size: var(--size-meta); fill: var(--text-secondary); }
+.ta-step { font-size: var(--size-capture); font-weight: var(--weight-strong); fill: var(--text-primary); }
+.ta-nav { font-size: var(--size-body); font-weight: var(--weight-medium); fill: var(--text-primary); }
+.ta-count { font-size: var(--size-meta); font-weight: var(--weight-medium); fill: var(--text-primary); font-variant-numeric: tabular-nums; }
+.ta-chip { fill: var(--chip-bg); }
+.ta-chip-text { font-size: var(--size-label); font-weight: var(--weight-medium); fill: var(--chip-ink); }
+.ta-chip-text.is-strong { fill: var(--text-primary); }
+.ta-icon { color: var(--icon-quiet); }
+.ta-icon-accent { color: var(--accent-default); }
+
+.ta-arrow path { fill: none; stroke: var(--icon-quiet); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.ta-tick { fill: none; stroke: var(--border-input); stroke-width: 1.5; }
+.ta-tick-done circle { fill: var(--success); }
+.ta-tick-done path { fill: none; stroke: var(--status-ink); stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+/* In progress: the wash and a thin accent outline all the way round. */
+.ta-doing { fill: var(--doing-wash); stroke: color-mix(in oklab, var(--doing-edge) 45%, transparent); }
+.ta-dot-done { fill: var(--success); }
+.ta-dot-now { fill: var(--text-primary); }
+.ta-dot-open { fill: none; stroke: var(--border-input); stroke-width: 1.5; }
+/* The illustrated Focus button is drawn as a wash, so the tour's own Next stays the one filled button. */
+.ta-go { fill: var(--accent-wash); }
+.ta-go-text { font-size: var(--size-label); font-weight: var(--weight-medium); fill: var(--accent-ink); }
+.ta-ring-track { fill: none; stroke: var(--border-default); stroke-width: 3; }
+.ta-ring-fill { fill: none; stroke: var(--success); stroke-width: 3; stroke-linecap: round; }
+.ta-bar { fill: color-mix(in oklab, var(--accent-default) 40%, var(--surface-sunk)); }
+.ta-bar.is-today { fill: var(--accent-default); }
+.ta-bar.is-later { fill: var(--surface-sunk); }
+.ta-day { font-size: var(--size-label); fill: var(--text-secondary); }
+.ta-day.is-today { font-weight: var(--weight-strong); fill: var(--text-primary); }
+
+/* Needs you: the one red thing in the picture. */
+.ta-you-row { fill: var(--you-wash); stroke: var(--you-line); }
+.ta-you { fill: var(--you); }
+.ta-you-text { font-size: var(--size-label); font-weight: var(--weight-medium); fill: var(--you-ink); }
+.ta-badge { font-size: var(--size-badge); font-weight: var(--weight-medium); fill: var(--you-ink); font-variant-numeric: tabular-nums; }
+.ta-icon-you { color: var(--you); }
+.ta-icon-you-ink { color: var(--you-ink); }
+/* The assistant: a plain spark in the accent, any app's helper. */
+.ta-spark { fill: var(--accent-default); }
+.ta-spark-bg { fill: var(--accent-wash); }
+
+/* ─── Arrival: each part comes in once, in order, and stays. Nothing loops. ─── */
+.ta-in { animation: ta-rise var(--duration-base) var(--ease-arrive) var(--d, 0ms) both; }
+.ta-fade { animation: ta-fade var(--duration-base) var(--ease-arrive) var(--d, 0ms) both; }
+.ta-draw { stroke-dasharray: 1; animation: ta-draw 360ms var(--ease-arrive) var(--d, 0ms) both; }
+.ta-glide { animation: ta-fade var(--duration-fast) var(--ease-arrive) 160ms both, ta-glide 560ms var(--ease-arrive) var(--d, 0ms) both; }
+.ta-pop { transform-box: fill-box; transform-origin: center; animation: ta-pop var(--duration-fast) var(--ease-pop) var(--d, 0ms) both; }
+.ta-grow { transform-box: fill-box; transform-origin: 50% 100%; animation: ta-grow var(--duration-slow) var(--ease-arrive) var(--d, 0ms) both; }
+.ta-ring-fill { animation: ta-ring var(--duration-slow) var(--ease-arrive) var(--d, 0ms) both; }
+@keyframes ta-rise { from { opacity: 0; translate: 0 6px; } }
+@keyframes ta-fade { from { opacity: 0; } }
+@keyframes ta-draw { from { stroke-dashoffset: 1; } }
+@keyframes ta-glide { from { translate: var(--fx, 0) var(--fy, 0); } }
+@keyframes ta-pop { from { opacity: 0; scale: 0.4; } }
+@keyframes ta-grow { from { scale: 1 0; } }
+@keyframes ta-ring { from { stroke-dashoffset: var(--ring-from); } }
+
+/* Reduced motion: every picture appears finished, in place. */
+@media (prefers-reduced-motion: reduce) {
+  .tour[open], .tour-stage, .ta, .ta * { animation: none !important; }
+  .tour-dots i { transition: none; }
+}

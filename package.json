@@ -1,0 +1,62 @@
+{
+  "name": "master-tasker",
+  "private": true,
+  "license": "MIT",
+  "version": "0.1.0",
+  "description": "Local-first task hub for work and life, built to work with AI assistants. React + SQLite + live updates + MCP.",
+  "homepage": "https://github.com/sgordon1024/master-tasker-app#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sgordon1024/master-tasker-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sgordon1024/master-tasker-app/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "vite",
+    "dev:server": "MT_DEV=1 node --watch server/main.ts",
+    "demo": "node scripts/demo.mjs",
+    "screenshots": "node scripts/demo.mjs --screenshots",
+    "build": "tsc -p tsconfig.json --noEmit && vite build",
+    "build:app": "vite build",
+    "start": "node server/main.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "mcp": "node mcp/server.ts",
+    "cli": "node server/cli.ts",
+    "devscan": "node automation/devscan.ts",
+    "review:setup": "node automation/review.ts setup",
+    "service": "zsh scripts/service.sh",
+    "test:all": "npm run typecheck && npm test && npm run build && npm run test:e2e",
+    "check:public": "node scripts/check-public.mjs"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "lucide-react": "^1.52.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "three": "^0.186.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.186.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.3",
+    "vitest": "^4.1.11"
+  }
+}

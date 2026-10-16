@@ -1,0 +1,64 @@
+/* First-run setup: one quiet card on the tour's plain page. The dialog shell, top bar and Esc key come from tour.css.
+   Reads tokens only. A chosen option gets a full thin outline and a light wash, never a coloured edge. */
+
+.setup-main { flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; align-items: center; padding: var(--space-2) var(--space-8) var(--space-8); }
+/* Centered when it fits, and scrolls from the top when it doesn't. */
+.setup-main > :first-child { margin-top: auto; }
+.setup-main > :last-child { margin-bottom: auto; }
+
+.setup-card {
+  width: min(560px, 100%); display: flex; flex-direction: column; gap: var(--space-6);
+  padding: var(--space-8); border: 1px solid var(--border-card); border-radius: var(--radius-lg);
+  background: var(--surface-card); box-shadow: var(--shadow-card);
+  animation: focus-step var(--duration-base) var(--ease-arrive);
+}
+.setup-head { display: flex; flex-direction: column; gap: var(--space-2); }
+.setup-title { margin: 0; font-size: var(--size-view); line-height: var(--leading-view); font-weight: var(--weight-strong); letter-spacing: var(--tracking-view); text-wrap: balance; }
+/* Focus starts here on a phone, only so a screen reader begins at the top. It's not something to press, so no ring. */
+.setup-title:focus, .setup-title:focus-visible { outline: none; }
+.setup-intro { margin: 0; font-size: var(--size-body); line-height: var(--leading-body); color: var(--text-secondary); text-wrap: pretty; }
+
+/* One question: a label or legend, a short helper line, then the field or the options. */
+.setup-q { margin: 0; padding: 0; border: 0; min-width: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+/* A legend won't sit in a flex column. Floating it puts it back in the flow like any other label. */
+.setup-q > legend { float: left; width: 100%; padding: 0; }
+.setup-q > legend + * { clear: both; }
+.setup-label { display: flex; align-items: baseline; gap: var(--space-2); font-size: var(--size-body); line-height: var(--leading-body); font-weight: var(--weight-medium); color: var(--text-primary); }
+.setup-optional { font-size: var(--size-label); line-height: var(--leading-label); font-weight: var(--weight-regular); color: var(--text-secondary); }
+.setup-help { margin: 0; font-size: var(--size-meta); line-height: var(--leading-meta); color: var(--text-secondary); text-wrap: pretty; }
+.setup-input { width: 100%; margin-top: var(--space-1); }
+
+.setup-options { display: grid; gap: var(--space-2); margin-top: var(--space-1); }
+.setup-options-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.setup-option {
+  display: flex; align-items: flex-start; gap: var(--space-3); min-height: var(--control-lg); padding: var(--space-3);
+  border: 1px solid var(--border-card); border-radius: var(--radius-md); background: var(--surface-card);
+  cursor: pointer; color: var(--text-primary);
+  transition: border-color var(--duration-fast) var(--ease-primary), background var(--duration-fast) var(--ease-primary);
+}
+.setup-option:hover { border-color: var(--border-input); }
+.setup-option.is-on { border-color: var(--accent-default); background: color-mix(in oklab, var(--accent-default) 7%, var(--surface-card)); }
+[data-theme='dark'] .setup-option.is-on { background: color-mix(in oklab, var(--accent-default) 12%, var(--surface-card)); }
+.setup-option:has(.setup-radio:focus-visible) { outline: 2px solid var(--ring-focus); outline-offset: 2px; }
+.setup-options-pair .setup-option { align-items: center; }
+.setup-radio { flex-shrink: 0; width: 16px; height: 16px; margin: 3px 0 0; accent-color: var(--accent-default); cursor: pointer; }
+.setup-options-pair .setup-radio { margin-top: 0; }
+/* The tile shows focus, so the dot doesn't need its own ring as well. */
+.setup-radio:focus-visible { outline: none; }
+.setup-option-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.setup-option-label { font-size: var(--size-body); line-height: var(--leading-body); font-weight: var(--weight-medium); text-wrap: pretty; }
+.setup-option-hint { font-size: var(--size-meta); line-height: var(--leading-meta); color: var(--text-secondary); text-wrap: pretty; }
+
+.setup-error { margin: 0; }
+.setup-actions { display: flex; justify-content: flex-end; }
+.setup-actions .focus-go { min-width: 160px; justify-content: center; }
+.setup-actions .focus-go:disabled { cursor: progress; opacity: 0.7; }
+
+@media (max-width: 600px) {
+  .setup-main { padding: 0 var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom)); }
+  /* On a phone the page is the card: no frame, so the words get the width. */
+  .setup-card { padding: var(--space-2) 0 0; gap: var(--space-5); border: 0; border-radius: 0; background: none; box-shadow: none; }
+  .setup-actions .focus-go { flex: 1; min-width: 0; padding: var(--space-3) var(--space-5); }
+}
+@media (pointer: coarse) { .setup-option { min-height: var(--control-lg); } }
+@media (prefers-reduced-motion: reduce) { .setup-card { animation: none; } .setup-option { transition: none; } }

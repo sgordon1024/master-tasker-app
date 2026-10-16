@@ -1,0 +1,15 @@
+/* Master Tasker brand seed (Baseline Tier 1). The project's own roles and scale live in tokens.css. */
+:root {
+  --seed-accent: #2F5BEA;
+  --seed-neutral-chroma: 0.006;
+  --seed-neutral-hue: 255;
+  --seed-radius: 8px;
+  /* Inter, self-hosted from @fontsource-variable/inter (SIL Open Font License 1.1). One face for everything you read. */
+  --seed-font-display: 'Inter Variable';
+  --seed-font-body: 'Inter Variable';
+  --seed-font-mono: ui-monospace;
+  --seed-motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --seed-motion-fast: 160ms;
+  --seed-motion-base: 240ms;
+  --seed-motion-slow: 420ms;
+}

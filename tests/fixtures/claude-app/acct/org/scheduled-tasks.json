@@ -1,0 +1,4 @@
+{"scheduledTasks":[
+ {"id":"daily-review","displayName":"Daily review","cronExpression":"0 8,14 * * *","enabled":true,"filePath":"routines/daily/SKILL.md","cwd":"/tmp","lastRunAt":"2026-10-08T14:00:00.000Z","approvedPermissions":[{"toolName":"mcp__x__search_threads"}]},
+ {"id":"notes-watch","displayName":"Watch for notes","cronExpression":"0 7 * * 1-5","enabled":true,"filePath":"routines/watch/SKILL.md","cwd":"/tmp","approvedPermissions":[]}
+]}

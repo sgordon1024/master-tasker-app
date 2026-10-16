@@ -1,0 +1,131 @@
+/* Vendored from the Baseline design system (tokens/colors.css) on 2026-10-07. Do not edit here; re-copy from Baseline. */
+/* ═══════════════════════════════════════════════════════════════════════
+   COLOR · Tier 2 primitives (ramps) + Tier 3 semantic mappings (light/dark)
+   Components consume SEMANTIC tokens only — never a primitive directly.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─────────── TIER 2 · PRIMITIVES — derived from the seed ─────────── */
+:root {
+  /* Neutral ramp — 12 steps, near-black → near-white, tinted by seed temp */
+  --neutral-50:  oklch(0.985 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-100: oklch(0.968 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-200: oklch(0.928 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-300: oklch(0.865 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-400: oklch(0.740 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-500: oklch(0.620 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-600: oklch(0.520 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-700: oklch(0.435 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-800: oklch(0.330 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-900: oklch(0.235 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-950: oklch(0.180 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --neutral-975: oklch(0.145 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+
+  /* Accent ramp — auto-computed from the seed for wash → pressed + on-accent text */
+  --accent-wash:    color-mix(in oklab, var(--seed-accent) 14%, transparent);
+  --accent-subtle:  color-mix(in oklab, var(--seed-accent) 30%, transparent);
+  --accent-muted:   color-mix(in oklab, var(--seed-accent) 60%, transparent);
+  --accent-default: var(--seed-accent);
+  --accent-hover:   color-mix(in oklab, var(--seed-accent), white 14%);
+  --accent-pressed: color-mix(in oklab, var(--seed-accent), black 16%);
+  --accent-on:      #FFFFFF;
+
+  /* Semantic status hues — harmonized to the seed */
+  /* Status hues are THEME-AWARE: light mode runs darker so the hue is legal as
+     TEXT on its wash (>=4.5:1); dark mode overrides below run brighter. The ink
+     used ON a solid status fill flips with the theme (--status-ink). */
+  --success: oklch(0.49 0.14 152);  --success-wash: color-mix(in oklab, var(--success) 15%, transparent);
+  --warning: oklch(0.51 0.11 75);   --warning-wash: color-mix(in oklab, var(--warning) 16%, transparent);
+  --danger:  oklch(0.50 0.19 25);   --danger-wash:  color-mix(in oklab, var(--danger) 15%, transparent);
+  --info:    oklch(0.50 0.13 245);  --info-wash:    color-mix(in oklab, var(--info) 15%, transparent);
+  --status-ink: #FFFFFF;
+}
+
+/* ─────────── TIER 3 · SEMANTIC — what components consume (LIGHT) ─────────── */
+:root {
+  --bg-primary:   oklch(0.995 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --bg-secondary: var(--neutral-50);
+  --bg-tertiary:  var(--neutral-100);
+  --bg-inverse:   var(--neutral-975);
+
+  --text-primary:   var(--neutral-975);
+  --text-secondary: var(--neutral-600);
+  --text-tertiary:  var(--neutral-500);
+  --text-disabled:  var(--neutral-400);
+  --text-inverse:   var(--neutral-50);
+  --text-on-accent: var(--accent-on);
+
+  --border-subtle:  color-mix(in oklab, var(--neutral-975) 8%, transparent);
+  --border-default: color-mix(in oklab, var(--neutral-975) 15%, transparent);
+  --border-strong:  color-mix(in oklab, var(--neutral-975) 47%, transparent); /* >=3:1 vs bg — carries control boundaries (switch tracks) */
+  --border-contrast: var(--neutral-500); /* WCAG 1.4.11's 3:1 for non-text UI, guaranteed: OPAQUE and mode-invariant, so no backdrop can undo the ratio (alpha tiers can be undone by compositing). For graph wires, focus rings, and graphical objects. */
+  --ring-focus:     var(--neutral-975);
+
+  --action-primary:         var(--accent-default);
+  --action-primary-hover:   var(--accent-hover);
+  --action-primary-pressed: var(--accent-pressed);
+  --action-primary-text:    var(--accent-on);
+  --action-secondary:         transparent;
+  --action-secondary-hover:   var(--bg-secondary);
+  --action-secondary-pressed: var(--bg-tertiary);
+  --action-secondary-text:    var(--text-primary);
+  --action-destructive:         var(--danger);
+  --action-destructive-hover:   color-mix(in oklab, var(--danger), black 12%);
+  --action-destructive-pressed: color-mix(in oklab, var(--danger), black 22%);
+  --action-destructive-text:    #fff;
+
+  --surface-raised:  var(--bg-primary);
+  --surface-overlay: var(--bg-primary);
+  --surface-sunken:  var(--neutral-100);
+
+  /* Elevation — subtle, large-blur, low-opacity (no 2015 material shadows) */
+  --shadow-xs: 0 1px 2px rgba(10,10,10,0.05);
+  --shadow-sm: 0 2px 8px -2px rgba(10,10,10,0.07), 0 1px 2px rgba(10,10,10,0.04);
+  --shadow-md: 0 10px 28px -8px rgba(10,10,10,0.12), 0 2px 6px -3px rgba(10,10,10,0.06);
+  --shadow-lg: 0 22px 50px -14px rgba(10,10,10,0.18), 0 6px 16px -10px rgba(10,10,10,0.10);
+  --shadow-xl: 0 40px 80px -24px rgba(10,10,10,0.24);
+  --shadow-bloom: 0 6px 30px -4px color-mix(in oklab, var(--seed-accent) 50%, transparent);
+
+  color-scheme: light;
+}
+
+/* ─────────── TIER 3 · SEMANTIC (DARK — a first-class theme, not inverted) ─────────── */
+[data-theme="dark"] {
+  --bg-primary:   var(--neutral-975);
+  --bg-secondary: oklch(0.185 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --bg-tertiary:  var(--neutral-900);
+  --bg-inverse:   var(--neutral-50);
+
+  --text-primary:   var(--neutral-50);
+  --text-secondary: var(--neutral-400);
+  --text-tertiary:  var(--neutral-500);
+  --text-disabled:  var(--neutral-700);
+  --text-inverse:   var(--neutral-975);
+
+  --border-subtle:  color-mix(in oklab, white 7%, transparent);
+  --border-default: color-mix(in oklab, white 14%, transparent);
+  --border-strong:  color-mix(in oklab, white 50%, transparent); /* >=3:1 vs bg */
+  --success: oklch(0.72 0.17 152);
+  --warning: oklch(0.80 0.15 80);
+  --danger:  oklch(0.68 0.19 25);
+  --info:    oklch(0.70 0.14 245);
+  --status-ink: var(--neutral-975);
+  --ring-focus:     var(--seed-accent);
+
+  /* Slightly desaturated accent so it doesn't vibrate on dark surfaces */
+  --accent-default: color-mix(in oklab, var(--seed-accent), var(--neutral-600) 8%);
+  --accent-hover:   color-mix(in oklab, var(--accent-default), white 12%);
+  --accent-pressed: color-mix(in oklab, var(--accent-default), black 14%);
+
+  /* Elevated surfaces get LIGHTER, never pure #000 cards on #000 bg */
+  --surface-raised:  var(--neutral-900);
+  --surface-overlay: var(--neutral-900);
+  --surface-sunken:  oklch(0.12 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-sm: 0 2px 10px -2px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 12px 30px -8px rgba(0,0,0,0.6), 0 3px 8px -4px rgba(0,0,0,0.5);
+  --shadow-lg: 0 24px 56px -14px rgba(0,0,0,0.66), 0 8px 20px -12px rgba(0,0,0,0.5);
+  --shadow-xl: 0 44px 88px -24px rgba(0,0,0,0.75);
+
+  color-scheme: dark;
+}

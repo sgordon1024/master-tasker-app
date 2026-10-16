@@ -1,0 +1,39 @@
+#!/bin/zsh
+# Stands in for launchctl in tests that need the service to really start. Does what fake-launchctl
+# (copied next to it) does, and also runs the job the way launchd would: kickstart starts the plist's
+# ProgramArguments with only its EnvironmentVariables, and bootout or kickstart -k stops it.
+# The job's pid is kept in $FAKE_LAUNCHCTL_DIR/<label>.pid and its output in <label>.out.
+dir="${FAKE_LAUNCHCTL_DIR:?}"
+"${0:h}/fake-launchctl" "$@" || exit
+label="${@[-1]##*/}"
+pidfile="$dir/$label.pid"
+
+halt() {
+  [[ -f "$pidfile" ]] || return 0
+  local pid="$(<"$pidfile")"
+  kill "$pid" 2>/dev/null
+  # launchd waits for the job to exit too.
+  for _ in {1..100}; do kill -0 "$pid" 2>/dev/null || break; sleep 0.05; done
+  rm -f "$pidfile"
+}
+
+case "$1" in
+  bootout) halt ;;
+  kickstart)
+    [[ "$2" == -k ]] && halt
+    [[ -f "$dir/$label" ]] || exit 0
+    [[ -f "$pidfile" ]] && kill -0 "$(<"$pidfile")" 2>/dev/null && exit 0
+    plist="$(<"$dir/$label")"
+    typeset -a job vars
+    for i in {0..9}; do
+      a="$(/usr/libexec/PlistBuddy -c "Print :ProgramArguments:$i" "$plist" 2>/dev/null)" || break
+      job+=("$a")
+    done
+    for k in NODE_ENV MT_PORT MT_HOST MT_DATA_DIR MT_LOG_DIR; do
+      v="$(/usr/libexec/PlistBuddy -c "Print :EnvironmentVariables:$k" "$plist" 2>/dev/null)" && vars+=("$k=$v")
+    done
+    env -i HOME="$HOME" "${vars[@]}" "${job[@]}" </dev/null >>"$dir/$label.out" 2>&1 &!
+    print -r -- "$!" > "$pidfile"
+    ;;
+esac
+exit 0

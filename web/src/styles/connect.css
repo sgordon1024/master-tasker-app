@@ -1,0 +1,72 @@
+/* Settings > AI assistants: which app you use, as equal tiles, then that app's panel, then Assistants with access.
+   Claude's panel: one card when there's no Claude yet, else one sentence with details behind a disclosure, then the
+   steps. The status rows, steps and token card are styled in app.css. */
+
+.assistants { scroll-margin-top: var(--space-4); }
+.assistants .section-title:focus, .access-title:focus { outline: none; }
+.assistants > .meta-line { max-width: 62ch; }
+
+/* Which app do you use? Seven equal tiles, four to a row, two on a phone. The picked one gets the accent wash and a
+   thin outline all the way round. */
+.assistant-pick { display: flex; flex-direction: column; gap: var(--space-2); width: 100%; margin-top: var(--space-2); }
+.assistant-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-2); width: 100%; }
+.assistant-tile {
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px;
+  min-height: 56px; padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-card); border-radius: var(--radius-md); background: var(--surface-card); box-shadow: var(--shadow-card);
+  color: var(--text-primary); font: inherit; font-weight: var(--weight-medium); text-align: left; cursor: pointer;
+  transition: box-shadow var(--duration-fast) var(--ease-primary), border-color var(--duration-fast) var(--ease-primary), background var(--duration-fast) var(--ease-primary);
+}
+.assistant-tile:hover { box-shadow: var(--shadow-card-hover); }
+.assistant-tile.is-on { border-color: var(--accent-default); background: color-mix(in oklab, var(--accent-default) 7%, var(--surface-card)); box-shadow: none; }
+[data-theme='dark'] .assistant-tile.is-on { background: color-mix(in oklab, var(--accent-default) 12%, var(--surface-card)); }
+.assistant-tile:focus-visible { outline: 2px solid var(--ring-focus); outline-offset: 2px; }
+.assistant-tile-name { overflow-wrap: anywhere; text-wrap: pretty; }
+.assistant-tile-state { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--size-label); line-height: var(--leading-label); color: var(--success-ink); }
+.assistant-tile-state.is-paused { color: var(--warning-ink); }
+
+/* The picked app's panel. */
+.assistant-panel { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); width: 100%; padding-top: var(--space-2); }
+.assistant-start { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); width: 100%; padding-top: var(--space-4); border-top: 1px solid var(--border-subtle); }
+.assistant-start .meta-line { max-width: 62ch; }
+.assistant-prompt { max-width: 62ch; margin: 0; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); background: var(--surface-sunk); font-size: var(--size-meta); line-height: var(--leading-meta); text-wrap: pretty; }
+.claude-terminal { width: 100%; padding-top: var(--space-2); border-top: 1px solid var(--border-subtle); }
+.claude-terminal-body { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+
+/* Assistants with access */
+.assistants-access { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); width: 100%; margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--border-subtle); scroll-margin-top: var(--space-4); }
+.access-title { font-size: var(--size-body); line-height: var(--leading-body); font-weight: var(--weight-strong); }
+.access-list { width: 100%; }
+.access-row { gap: var(--space-2); }
+.access-head { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+.access-name { font-weight: var(--weight-strong); overflow-wrap: anywhere; }
+.access-details > :not(summary) { margin-top: var(--space-1); }
+.access-row .card-foot { margin-top: var(--space-1); }
+.access-advanced { width: 100%; }
+.access-script { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+.access-script .meta-line { max-width: 62ch; }
+
+/* No Claude on this Mac: one card, one way forward. */
+.connect-none { width: 100%; gap: var(--space-2); }
+.connect-none-title { font-size: var(--size-capture); line-height: var(--leading-capture); font-weight: var(--weight-strong); }
+.connect-none-body { max-width: 62ch; text-wrap: pretty; }
+.connect-none .button-row { margin-top: var(--space-2); }
+
+/* What's there, in a sentence. */
+.connect-summary { display: flex; align-items: flex-start; gap: var(--space-2) var(--space-3); flex-wrap: wrap; }
+.connect-summary-ok { flex-shrink: 0; margin-top: 2px; color: var(--success); }
+.connect-sentence { flex: 1 1 24ch; min-width: 0; max-width: 62ch; font-weight: var(--weight-medium); text-wrap: pretty; }
+.connect-summary .btn { margin-top: -6px; margin-left: auto; }
+.connect-details > :not(summary) { margin-top: var(--space-2); }
+.connect-details .claude-status-list { margin-top: var(--space-2); }
+
+/* Let it work on tasks */
+.connect-work { display: flex; flex-direction: column; gap: var(--space-1); max-width: 62ch; }
+.connect-work .check-label { font-size: var(--size-body); line-height: var(--leading-body); font-weight: var(--weight-medium); }
+/* Shown again under its button, on a line of its own. */
+.connect-settings-again { flex-basis: 100%; min-width: 0; }
+
+@media (max-width: 759px) {
+  .connect-summary .btn { margin-left: 0; margin-top: 0; }
+  .assistant-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

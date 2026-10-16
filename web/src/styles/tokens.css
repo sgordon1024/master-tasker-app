@@ -1,0 +1,126 @@
+/* Master Tasker's own tokens, on top of Baseline (seed.css and baseline/). Light first, then dark.
+   Components read these and Baseline's semantic tokens, never raw values. DESIGN.md says what each one is for. */
+
+/* ─── Type: one face, seven sizes, three weights ─── */
+:root {
+  --size-badge: 11px; /* numerals in badges, nothing else */
+  --size-label: 12px;   --leading-label: 16px;
+  --size-meta: 13px;    --leading-meta: 18px;
+  --size-body: 14px;    --leading-body: 20px;
+  --size-capture: 16px; --leading-capture: 24px;
+  --size-title: 20px;   --leading-title: 26px;
+  --size-view: 28px;    --leading-view: 32px;
+  --size-focus: 40px;   --leading-focus: 46px;
+  --tracking-view: -0.02em;
+  --tracking-title: -0.011em;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+}
+
+/* ─── Controls: four heights ─── */
+:root {
+  --control-xs: 28px; /* inside a row: a subtask's tools, a status menu */
+  --control-sm: 32px;
+  --control-md: 36px;
+  --control-lg: 44px; /* touch, and the one big button in Focus */
+}
+
+/* ─── Color roles (light) ─── */
+:root {
+  /* Surfaces. The page is the lightest; the sidebar and board columns sit one step down; cards sit on the page color with a small shadow. Each step is at least 1.08:1. */
+  --surface-page: var(--bg-primary);
+  --surface-pane: oklch(0.96 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --surface-card: var(--bg-primary);
+  --surface-sunk: var(--neutral-100);
+  --border-card: color-mix(in oklab, var(--neutral-975) 12%, transparent);
+  --border-column: transparent;
+  /* Field outlines reach 3:1 on the page and on the pane. */
+  --border-input: var(--neutral-500);
+  --shadow-card: 0 1px 2px rgb(10 10 10 / 0.06), 0 1px 1px rgb(10 10 10 / 0.03);
+  --shadow-card-hover: 0 4px 12px -4px rgb(10 10 10 / 0.12), 0 1px 2px rgb(10 10 10 / 0.05);
+  /* Dialogs and the narrow-window task panel: a soft lift, not a cliff. */
+  --shadow-xl: 0 24px 48px -20px rgb(10 10 10 / 0.22), 0 4px 12px -6px rgb(10 10 10 / 0.08);
+  /* Card rest for a drawn shape (the tour's pictures), as a filter instead of a box-shadow. */
+  --shadow-drop: drop-shadow(0 1px 1.5px rgb(10 10 10 / 0.07));
+
+  /* Red means two things only: Needs you and Overdue. Text-safe on every surface, and a fill behind --you-ink. */
+  --you: oklch(0.55 0.2 17);
+  --you-ink: #FFFFFF;
+  --you-line: color-mix(in oklab, var(--you) 45%, transparent);
+  --you-wash: color-mix(in oklab, var(--you) 6%, transparent);
+
+  /* In progress: an accent wash with a 3px accent edge, and the app's one shimmer. */
+  --doing-wash: color-mix(in oklab, var(--accent-default) 7%, var(--surface-card));
+  --doing-edge: var(--accent-default);
+  --doing-shine: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.55) 50%, transparent 65%);
+  --shine-every: 3.2s;
+  /* The In progress dot. Still, and the same in every color theme. */
+  --rainbow: oklch(0.62 0.19 20), oklch(0.74 0.15 80), oklch(0.64 0.15 150), oklch(0.62 0.12 220), oklch(0.56 0.19 300), oklch(0.62 0.19 20);
+
+  /* Area colors: eight hues around the wheel, skipping the red that Needs you owns. Stored as the light value's hex. */
+  --area-1: oklch(0.55 0.14 270);
+  --area-2: oklch(0.55 0.14 310);
+  --area-3: oklch(0.55 0.136 55);
+  --area-4: oklch(0.55 0.096 185);
+  --area-5: oklch(0.55 0.112 95);
+  --area-6: oklch(0.55 0.14 350);
+  --area-7: oklch(0.55 0.14 140);
+  --area-8: oklch(0.55 0.108 230);
+
+  /* Status text on its own wash. Baseline's status colors are tuned for fills, so text darkens a step. */
+  --warning-ink: color-mix(in oklab, var(--warning) 72%, black);
+  --success-ink: color-mix(in oklab, var(--success) 82%, black);
+  /* Chips: a faint fill that works on any surface, and text a step darker than secondary so it holds 4.5:1 on a wash. */
+  --chip-bg: color-mix(in oklab, var(--text-primary) 5%, transparent);
+  --chip-ink: color-mix(in oklab, var(--text-secondary) 78%, var(--text-primary));
+
+  /* Text tertiary is for icons (3:1). Text that people read uses primary or secondary. */
+  --icon-quiet: var(--text-tertiary);
+}
+
+/* ─── Color roles (dark) ─── */
+[data-theme='dark'] {
+  --surface-page: var(--bg-primary);
+  /* One step up from the page, at least 1.08:1 against it and against cards (Baseline's --bg-secondary is 1.06). */
+  --surface-pane: oklch(0.2 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --surface-card: var(--surface-raised);
+  --surface-sunk: oklch(0.12 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --border-card: color-mix(in oklab, white 9%, transparent);
+  --border-column: var(--border-subtle);
+  --border-input: oklch(0.55 var(--seed-neutral-chroma) var(--seed-neutral-hue));
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-card-hover: 0 6px 16px -6px rgb(0 0 0 / 0.6), 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-xl: 0 24px 56px -20px rgb(0 0 0 / 0.7), 0 4px 12px -6px rgb(0 0 0 / 0.4);
+  --shadow-drop: drop-shadow(0 1px 2px rgb(0 0 0 / 0.4));
+
+  --you: oklch(0.72 0.16 15);
+  --you-ink: var(--neutral-975);
+  --you-line: color-mix(in oklab, var(--you) 50%, transparent);
+  --you-wash: color-mix(in oklab, var(--you) 8%, transparent);
+
+  --doing-wash: color-mix(in oklab, var(--accent-default) 10%, var(--surface-card));
+  --doing-shine: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.07) 50%, transparent 65%);
+  --rainbow: oklch(0.72 0.17 20), oklch(0.84 0.14 85), oklch(0.76 0.15 150), oklch(0.76 0.12 220), oklch(0.72 0.16 300), oklch(0.72 0.17 20);
+
+  --area-1: oklch(0.72 0.14 270);
+  --area-2: oklch(0.72 0.14 310);
+  --area-3: oklch(0.72 0.14 55);
+  --area-4: oklch(0.72 0.126 185);
+  --area-5: oklch(0.72 0.14 95);
+  --area-6: oklch(0.72 0.14 350);
+  --area-7: oklch(0.72 0.14 140);
+  --area-8: oklch(0.72 0.14 230);
+
+  --warning-ink: var(--warning);
+  --success-ink: var(--success);
+  --chip-bg: color-mix(in oklab, var(--text-primary) 7%, transparent);
+  --chip-ink: color-mix(in oklab, var(--text-secondary) 70%, var(--text-primary));
+}
+
+/* ─── Motion ─── */
+:root {
+  /* Arrivals ease out; only the completion check springs. */
+  --ease-arrive: var(--ease-out-expo);
+  --ease-pop: var(--ease-spring);
+}

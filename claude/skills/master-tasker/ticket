@@ -1,0 +1,21 @@
+#!/bin/sh
+# The /master-tasker skill's runner. It finds this repo from its own real folder, so it works
+# through the ~/.claude/skills/master-tasker link wherever the repo lives, then runs
+# automation/ticket.ts with the settings in .local.env beside it: MT_DATA_DIR, MASTER_TASKER_URL
+# and MT_NODE. scripts/install-skill.sh and Settings > AI assistants write that file.
+# Without a working MT_NODE (no settings file yet, or its Node is gone), it uses the Node that
+# ./scripts/service.sh get-node downloaded, then the usual places, then node on the PATH.
+#   ticket get <taskId>    and the other commands in automation/ticket.ts
+DIR=$(cd "$(dirname "$0")" && pwd -P)
+if [ -f "$DIR/.local.env" ]; then
+  set -a
+  . "$DIR/.local.env"
+  set +a
+fi
+if [ ! -x "${MT_NODE:-}" ]; then
+  MT_NODE=node
+  for c in "$DIR/../../../.node/bin/node" /opt/homebrew/bin/node /usr/local/bin/node; do
+    if [ -x "$c" ]; then MT_NODE=$c; break; fi
+  done
+fi
+exec "$MT_NODE" "$DIR/../../../automation/ticket.ts" "$@"

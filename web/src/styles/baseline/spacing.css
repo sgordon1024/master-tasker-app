@@ -1,0 +1,26 @@
+/* Vendored from the Baseline design system (tokens/spacing.css) on 2026-10-07. Do not edit here; re-copy from Baseline. */
+/* ═══════════════════════════════════════════════════════════════════════
+   SPACING & RADIUS
+   Space scale on a 4px base. Radius scale derives from --seed-radius so
+   corner personality re-skins with the seed.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  --radius-xs:   calc(var(--seed-radius) * 0.5);
+  --radius-sm:   var(--seed-radius);
+  --radius-md:   calc(var(--seed-radius) * 1.5);
+  --radius-lg:   calc(var(--seed-radius) * 2.5);
+  --radius-xl:   calc(var(--seed-radius) * 4);
+  --radius-full: 999px;
+}

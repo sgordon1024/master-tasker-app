@@ -1,0 +1,38 @@
+/* Vendored from the Baseline design system (tokens/motion.css) on 2026-10-07. Do not edit here; re-copy from Baseline. */
+/* ═══════════════════════════════════════════════════════════════════════
+   MOTION · easing curves + durations + shared keyframes
+   Rule: animate transform + opacity only. --ease-primary + the durations
+   derive from the seed's motion personality.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  --ease-out-expo:     cubic-bezier(0.16, 1, 0.3, 1);   /* the hero curve — Uber-smooth */
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);  /* reversals */
+  --ease-spring:       cubic-bezier(0.34, 1.56, 0.64, 1); /* playful only */
+
+  --ease-primary: var(--seed-motion-ease, var(--ease-out-expo));
+
+  --duration-instant: 100ms;                        /* hovers */
+  --duration-fast:    var(--seed-motion-fast, 200ms);  /* state changes */
+  --duration-base:    var(--seed-motion-base, 300ms);  /* reveals */
+  --duration-slow:    var(--seed-motion-slow, 600ms);  /* page / hero transitions */
+}
+
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+@keyframes ds-shimmer { 0% { background-position: -160% 0; } 100% { background-position: 260% 0; } }
+@keyframes ds-pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.55); } }
+@keyframes ds-ping { 0% { transform: scale(1); opacity: 0.55; } 80%,100% { transform: scale(2.6); opacity: 0; } }
+@keyframes ds-toast-in { from { opacity: 0; transform: translateX(18px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes ds-overlay-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ds-modal-in { from { opacity: 0; transform: translateY(14px) scale(0.985); } to { opacity: 1; transform: none; } }
+@keyframes ds-drawer-in { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes ds-indeterminate { 0% { left: -45%; width: 45%; } 60% { width: 60%; } 100% { left: 100%; width: 45%; } }
+
+/* Everything respects prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

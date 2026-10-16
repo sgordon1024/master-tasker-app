@@ -1,0 +1,26 @@
+#!/bin/zsh
+# Stands in for launchctl in tests, so scripts/service.sh never touches the real launchd.
+# Every call is appended to $FAKE_LAUNCHCTL_DIR/calls. A label counts as loaded while
+# $FAKE_LAUNCHCTL_DIR/<label> exists; that file holds the plist path it was loaded from.
+dir="${FAKE_LAUNCHCTL_DIR:?}"
+print -r -- "$*" >> "$dir/calls"
+label="${2##*/}"
+case "$1" in
+  print)
+    [[ -f "$dir/$label" ]] || exit 113
+    print -r -- "$2 = {"
+    print -r -- "	path = $(<"$dir/$label")"
+    print -r -- "	state = running"
+    print -r -- "	pid = 4242"
+    print -r -- "	runs = 1"
+    print -r -- "	last exit code = (never exited)"
+    print -r -- "}"
+    ;;
+  bootstrap)
+    l="$(/usr/libexec/PlistBuddy -c 'Print :Label' "$3")"
+    print -r -- "$3" > "$dir/$l"
+    ;;
+  bootout) rm -f "$dir/$label" ;;
+  kickstart) ;;
+esac
+exit 0

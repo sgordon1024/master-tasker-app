@@ -1,0 +1,58 @@
+/* Vendored from the Baseline design system (tokens/reset.css) on 2026-10-07. Do not edit here; re-copy from Baseline. */
+/* ═══════════════════════════════════════════════════════════════════════
+   RESET / BASE — minimal, token-driven. Focus-visible rings are baked in
+   and must never be removed (WCAG 2.2 AA).
+   ═══════════════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background var(--duration-base) var(--ease-primary),
+              color var(--duration-base) var(--ease-primary);
+}
+
+a { color: var(--text-primary); text-decoration: none; }
+a:hover { color: var(--accent-default); }
+button { font-family: inherit; }
+
+::selection { background: var(--seed-accent); color: #0A0A0A; }
+
+/* Focus rings — 2px ring + 2px offset, on everything, never removed */
+:focus:not(:focus-visible) { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--ring-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* Scrollbars */
+* { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); background-clip: content-box; }
+::-webkit-scrollbar-track { background: transparent; }
+
+input::placeholder, textarea::placeholder { color: var(--text-tertiary); opacity: 1; }
+
+/* Optional flat-but-textured grain for hero surfaces */
+.ds-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
